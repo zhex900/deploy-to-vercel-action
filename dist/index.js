@@ -15229,6 +15229,10 @@ const context = {
         key: ['GH_PAT', 'GITHUB_TOKEN'],
         required: true,
     }),
+    VERCEL_ARGS: parser.getInput({
+        key: 'VERCEL_ARGS',
+        required: false,
+    }),
     VERCEL_TOKEN: parser.getInput({
         key: 'VERCEL_TOKEN',
         required: true,
@@ -15580,6 +15584,7 @@ const {
     VERCEL_SCOPE,
     VERCEL_ORG_ID,
     VERCEL_PROJECT_ID,
+    VERCEL_ARGS,
     SHA,
     USER,
     REPOSITORY,
@@ -15598,7 +15603,11 @@ const init = () => {
     let deploymentUrl;
 
     const deploy = async (commit) => {
-        let commandArguments = [`--prebuilt`, `--token=${VERCEL_TOKEN}`];
+        let commandArguments = [`--token=${VERCEL_TOKEN}`];
+
+        if (VERCEL_ARGS) {
+            commandArguments = [...commandArguments, ...VERCEL_ARGS.split(',')];
+        }
 
         if (VERCEL_SCOPE) {
             commandArguments.push(`--scope=${VERCEL_SCOPE}`);
