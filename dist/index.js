@@ -15585,7 +15585,7 @@ const init = () => {
   let deploymentUrl;
 
   const deploy = async (commit) => {
-    let commandArguments = [`deploy --prebuilt --token=${VERCEL_TOKEN}`];
+    let commandArguments = [`deploy`, `--prebuilt`, `--token=${VERCEL_TOKEN}`];
 
     if (VERCEL_SCOPE) {
       commandArguments.push(`--scope=${VERCEL_SCOPE}`);
