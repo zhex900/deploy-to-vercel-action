@@ -26,7 +26,7 @@ const init = () => {
   let deploymentUrl;
 
   const deploy = async (commit) => {
-    let commandArguments = [`--token=${VERCEL_TOKEN}`];
+    let commandArguments = [`deploy --prebuilt --token=${VERCEL_TOKEN}`];
 
     if (VERCEL_SCOPE) {
       commandArguments.push(`--scope=${VERCEL_SCOPE}`);
@@ -70,6 +70,13 @@ const init = () => {
     }
 
     core.info("Starting deploy with Vercel CLI: ->");
+    core.info(
+      `Command: ${JSON.stringify(
+        commandArguments,
+        null,
+        2
+      )}, ${WORKING_DIRECTORY}`
+    );
     const output = await exec("vercel", commandArguments, WORKING_DIRECTORY);
     const parsed = output.match(/(?<=https?:\/\/)(.*)/g)[0];
 
